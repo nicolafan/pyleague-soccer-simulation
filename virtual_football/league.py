@@ -1,10 +1,12 @@
 import random
 
+from typing import List, Tuple
+
 
 class Team:
     form_value = 0
 
-    def __init__(self, identifier, name, strength_value, attack_power, defense_power):
+    def __init__(self, identifier: str, name: str, strength_value: int, attack_power: int, defense_power: int):
         self.identifier = identifier
         self.name = name
         self.strength_value = strength_value
@@ -16,16 +18,16 @@ class Participant:
     points = 0
     goals_scored = 0
     goals_conceded = 0
-    last_results = []
+    last_results: List[int] = []
 
     def __init__(self, team):
         self.team = team
 
 
 class League:
-    fixtures = []
+    fixtures: List[List[Tuple[str, str]]] = []
 
-    def __init__(self, name, teams):
+    def __init__(self, name: str, teams: List[Team]) -> None:
         self.name = name
         self.participants = []
         for team in teams:
@@ -65,5 +67,6 @@ class League:
             second_round = [(y, x) for (x, y) in self.fixtures[i]]
             self.fixtures.append(second_round)
 
-
+    def get_team_by_id(self, identifier: str) -> Team:
+        return [x.team for x in self.participants if x.team.identifier == identifier][0]
 
