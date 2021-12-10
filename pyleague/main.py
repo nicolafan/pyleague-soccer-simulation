@@ -3,7 +3,7 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
-from virtual_football.league import *
+from pyleague.league import *
 
 teams: List[Team] = []
 

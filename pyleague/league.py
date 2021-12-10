@@ -2,8 +2,8 @@ import random
 
 import typing
 
-from virtual_football import simulation
-from virtual_football.models import *
+from pyleague import simulation
+from pyleague.models import *
 
 
 class League:

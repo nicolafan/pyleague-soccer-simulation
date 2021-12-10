@@ -1,7 +1,7 @@
 import random
 import string
 
-import virtual_football.models
+import pyleague.models
 
 
 def get_random_string(length: int) -> str:
@@ -18,5 +18,5 @@ def get_random_team():
     ap = random.randint(1, 40)
     dp = random.randint(1, 40)
 
-    team = virtual_football.models.Team(identifier, name, sv, ap, dp)
+    team = pyleague.models.Team(identifier, name, sv, ap, dp)
     return team

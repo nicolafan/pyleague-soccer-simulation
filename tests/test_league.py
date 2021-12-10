@@ -2,8 +2,8 @@ from typing import List
 
 import pytest
 
-from virtual_football import league, util
-from virtual_football.models import Team
+from pyleague import league, util
+from pyleague.models import Team
 
 
 def test_create_league():
