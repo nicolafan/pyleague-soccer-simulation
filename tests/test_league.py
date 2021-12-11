@@ -32,15 +32,15 @@ def test_create_league():
         teams_ok.append(util.get_random_team())
 
     with pytest.raises(ValueError):
-        league.League(league_name, teams_fail_1)
+        league.create_league(league_name, teams_fail_1)
     with pytest.raises(ValueError):
-        league.League(league_name, teams_fail_2)
+        league.create_league(league_name, teams_fail_2)
     with pytest.raises(ValueError):
-        league.League(league_name, teams_fail_3)
+        league.create_league(league_name, teams_fail_3)
     with pytest.raises(ValueError):
-        league.League(league_name, teams_fail_4)
+        league.create_league(league_name, teams_fail_4)
 
-    tournament = league.League(league_name, teams_ok)
+    tournament = league.create_league(league_name, teams_ok)
     assert tournament is not None
 
 

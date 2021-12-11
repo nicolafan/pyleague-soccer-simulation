@@ -1,6 +1,7 @@
 import random
 
 import typing
+from typing import Optional
 
 from pyleague import simulation
 from pyleague.models import *
@@ -25,9 +26,9 @@ class League:
         for team in teams:
             self.participants.append(Participant(team))
 
-        self.generate_fixtures()
+        self._generate_fixtures()
 
-    def generate_fixtures(self):
+    def _generate_fixtures(self):
         group_size = int(self.n_participants / 2)
         group_a = random.sample(self.participants, group_size)
         group_a = [p.team.identifier for p in group_a]
@@ -79,12 +80,26 @@ class League:
                 participant_b.points += 1
 
         self.matchday += 1
-        self.print_standings()
+        self._print_standings()
 
-    def print_standings(self):
+    def _print_standings(self):
         standings = [x for x in self.participants]
         standings.sort(key=lambda x: x.points, reverse=True)
         print('MATCHDAY {0}\n'.format(self.matchday))
         for x in standings:
             print('{0} {1}'.format(x.team.name, x.points))
         print('\n')
+
+    def get_standings(self):
+        standings = [x for x in self.participants]
+        standings.sort(key=lambda x: x.points, reverse=True)
+        return standings
+
+
+league: Optional[League] = None
+
+
+def create_league(name: str, teams: List[Team]):
+    global league
+    league = League(name, teams)
+    return league

@@ -22,6 +22,7 @@ def setup_teams(filename):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     setup_teams('../lega_a.csv')
-    league = League(name="Serie A", teams=teams)
+    league = create_league(name="Lega A", teams=teams)
+    import pyleague.interface
     for i in range(0, 38):
         league.generate_matchday()

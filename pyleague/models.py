@@ -44,6 +44,9 @@ class Participant:
         self.points = 0
         self.goals_scored = 0
         self.goals_conceded = 0
+        self.wins = 0
+        self.draws = 0
+        self.losses = 0
         self.last_results: List[int] = []
 
         self.team = team
