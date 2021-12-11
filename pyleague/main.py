@@ -2,26 +2,26 @@
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
+import csv
 from pyleague.league import *
 
 teams: List[Team] = []
 
 
 def setup_teams(filename):
-    with open(filename) as f:
-        lines = f.readlines()
+    # Read CSV file
+    with open(filename) as fp:
+        reader = csv.reader(fp, delimiter=",", quotechar='"')
+        lines = [row for row in reader]
+
     for line in lines:
-        elements = line.split(" ")
-        if len(elements) > 5:
-            elements = elements[:-1]
-        identifier, name, sv, ap, dp = elements
+        identifier, name, sv, ap, dp = line
         teams.append(Team(identifier, name, int(sv), int(ap), int(dp)))
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    setup_teams('serie_a.txt')
+    setup_teams('../lega_a.csv')
     league = League(name="Serie A", teams=teams)
     for i in range(0, 38):
         league.generate_matchday()
