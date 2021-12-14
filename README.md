@@ -13,8 +13,8 @@ PyLeague is a software simulation of a soccer championship developed using Pytho
 
 ## Future developments
 PyLeague can be seen as a basis for creating cool projects which need the generation of realistical random soccer results.
-Also, it can be improved and enhanced with many other features.
-The next developments of PyLeague will be:
+<br>Also, it can be improved and enhanced with many other features.
+<br>The next developments of PyLeague will be:
 * Enhancement and improvement of the available features.
 * Improvement of code documentation.
 * Development of the games simulation screen minute by minute.
@@ -23,10 +23,10 @@ The next developments of PyLeague will be:
 
 ## Installing PyLeague
 To install and run PyLeague just clone the project and create a specific Python environment for running/modifying PyLeague.
-The requirements are contained in the <code>requirements.txt</code> file.
+<br>The requirements are contained in the <code>requirements.txt</code> file.
 
 ## Contributing
-If you want to help me adding new features and improving PyLeague, you're welcome! Just fork the project, commit your changes and create a PR.
-If you want you can create a new issue for the project and ask me anything related to it here on Github!
-I'm open to new improvements and suggestions.
+If you want to help me adding new features and improving PyLeague, you're welcome!<br> Just fork the project, commit your changes and create a PR.
+<br>If you want you can create a new issue for the project and ask me anything related to it here on Github!
+<br>I'm open to new improvements and suggestions.
 Thank you and happy coding with PyLeague!
