@@ -8,7 +8,7 @@ def get_random_string(length: int) -> str:
     letters = string.ascii_letters
     digits = string.digits
 
-    return ''.join(random.choice(letters.join(digits)) for i in range(length))
+    return "".join(random.choice(letters.join(digits)) for i in range(length))
 
 
 def get_random_team():

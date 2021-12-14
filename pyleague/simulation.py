@@ -29,7 +29,9 @@ def get_draw_weight(a_weight: int, b_weight: int) -> int:
         return 0
 
     x = (a_weight - b_weight) / a_weight
-    y = (draw_line_y2 - draw_line_y1) * (x - draw_line_x1) / (draw_line_x2 - draw_line_x1) + draw_line_y1
+    y = (draw_line_y2 - draw_line_y1) * (x - draw_line_x1) / (
+        draw_line_x2 - draw_line_x1
+    ) + draw_line_y1
 
     draw_weight = ((y * a_weight) + (y * b_weight)) / (1 - y)
     return int(draw_weight)
@@ -40,14 +42,5 @@ def generate_outcome(team_a: models.Team, team_b: models.Team) -> str:
     b_weight = get_weight(team_b, is_home=False)
     d_weight = get_draw_weight(a_weight, b_weight)
     weights = [a_weight, d_weight, b_weight]
-    outcome = random.choices(population=['1', 'X', '2'], weights=weights, k=1)[0]
-    if outcome == '1':
-        team_a.add_win()
-        team_b.add_loss()
-    elif outcome == '2':
-        team_a.add_loss()
-        team_b.add_win()
-    else:
-        team_a.add_draw()
-        team_b.add_draw()
+    outcome = random.choices(population=["1", "X", "2"], weights=weights, k=1)[0]
     return outcome

@@ -8,19 +8,18 @@ from pyleague.models import *
 
 
 class League:
-
     def __init__(self, name: str, teams: List[Team]) -> None:
         self.fixtures: List[List[typing.Tuple[str, str]]] = []
         self.matchday = 0
 
         self.n_participants = len(teams)
         if self.n_participants % 2 == 1:
-            raise ValueError('Number of teams must be even.')
+            raise ValueError("Number of teams must be even.")
         if self.n_participants < 1 or self.n_participants > 40:
-            raise ValueError('Number of teams must be between 2 and 40.')
+            raise ValueError("Number of teams must be between 2 and 40.")
         identifiers = [team.identifier for team in teams]
         if len(identifiers) != len(set(identifiers)):
-            raise ValueError('Identifiers must be unique.')
+            raise ValueError("Identifiers must be unique.")
         self.name = name
         self.participants = []
         for team in teams:
@@ -32,7 +31,11 @@ class League:
         group_size = int(self.n_participants / 2)
         group_a = random.sample(self.participants, group_size)
         group_a = [p.team.identifier for p in group_a]
-        group_b = [p.team.identifier for p in self.participants if p.team.identifier not in group_a]
+        group_b = [
+            p.team.identifier
+            for p in self.participants
+            if p.team.identifier not in group_a
+        ]
 
         random.shuffle(group_a)
         random.shuffle(group_b)
@@ -68,16 +71,20 @@ class League:
 
     def generate_matchday(self):
         for (x, y) in self.fixtures[self.matchday]:
-            outcome = simulation.generate_outcome(self.get_team_by_id(x), self.get_team_by_id(y))
+            outcome = simulation.generate_outcome(
+                self.get_team_by_id(x), self.get_team_by_id(y)
+            )
             participant_a = self.get_participant_by_id(x)
             participant_b = self.get_participant_by_id(y)
-            if outcome == '1':
-                participant_a.points += 3
-            elif outcome == '2':
-                participant_b.points += 3
+            if outcome == "1":
+                participant_a.add_win()
+                participant_b.add_loss()
+            elif outcome == "2":
+                participant_a.add_loss()
+                participant_b.add_win()
             else:
-                participant_a.points += 1
-                participant_b.points += 1
+                participant_a.add_draw()
+                participant_b.add_draw()
 
         self.matchday += 1
         self._print_standings()
@@ -85,10 +92,10 @@ class League:
     def _print_standings(self):
         standings = [x for x in self.participants]
         standings.sort(key=lambda x: x.points, reverse=True)
-        print('MATCHDAY {0}\n'.format(self.matchday))
+        print("MATCHDAY {0}\n".format(self.matchday))
         for x in standings:
-            print('{0} {1}'.format(x.team.name, x.points))
-        print('\n')
+            print("{0} {1}".format(x.team.name, x.points))
+        print("\n")
 
     def get_standings(self):
         standings = [x for x in self.participants]

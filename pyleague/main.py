@@ -20,8 +20,8 @@ def setup_teams(filename):
 
 
 # Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    setup_teams('../lega_a.csv')
+if __name__ == "__main__":
+    setup_teams("../lega_a.csv")
     league = create_league(name="Lega A", teams=teams)
     print(league)
     import pyleague.interface
