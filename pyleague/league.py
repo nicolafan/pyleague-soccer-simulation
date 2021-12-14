@@ -71,11 +71,12 @@ class League:
 
     def generate_matchday(self):
         for (x, y) in self.fixtures[self.matchday]:
-            outcome = simulation.generate_outcome(
-                self.get_team_by_id(x), self.get_team_by_id(y)
-            )
             participant_a = self.get_participant_by_id(x)
             participant_b = self.get_participant_by_id(y)
+            outcome = simulation.generate_outcome(
+                participant_a.team, participant_b.team
+            )
+
             if outcome == "1":
                 participant_a.add_win()
                 participant_b.add_loss()
@@ -86,8 +87,17 @@ class League:
                 participant_a.add_draw()
                 participant_b.add_draw()
 
+            goals_home, goals_away = simulation.generate_result(participant_a.team,
+                                                                participant_b.team,
+                                                                outcome)
+            print(participant_a.team.name, goals_home, '-', goals_away, participant_b.team.name)
+            participant_a.goals_scored += goals_home
+            participant_a.goals_conceded += goals_away
+            participant_b.goals_scored += goals_away
+            participant_b.goals_conceded += goals_home
+
         self.matchday += 1
-        self._print_standings()
+        # self._print_standings()
 
     def _print_standings(self):
         standings = [x for x in self.participants]

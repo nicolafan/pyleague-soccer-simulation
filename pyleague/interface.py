@@ -112,7 +112,7 @@ class StandingsTable(tk.Frame):
                             borderwidth=0,
                             font=app_bold_font,
                             fg="white",
-                            width=3
+                            width=3,
                         )
                         label.pack(side=tk.LEFT, padx=4, pady=4)
                         current_row.append(label)
@@ -161,7 +161,7 @@ class StandingsTable(tk.Frame):
             results = team.last_results.copy()
             results.reverse()
             for j in range(len(results)):
-                widget = self._widgets[i][3+j]
+                widget = self._widgets[i][3 + j]
                 widget.configure(text=results[j])
                 color = "green"
                 if results[j] == "D":
