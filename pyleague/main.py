@@ -23,4 +23,5 @@ def setup_teams(filename):
 if __name__ == '__main__':
     setup_teams('../lega_a.csv')
     league = create_league(name="Lega A", teams=teams)
+    print(league)
     import pyleague.interface

@@ -1,106 +1,98 @@
 import tkinter as tk
-from tkinter import font, PhotoImage
-from typing import Optional
-
+from pyleague.league import league
 from PIL import ImageTk, Image
 
-from pyleague.league import league
-
-gui = tk.Tk()
-gui_width = 1024
-gui_height = 512
+# globals
 bg_color = '#121212'
 primary_color = '#bc8044'
-app_font = ('Inter', 12)
-app_font_bold = ('Inter', 12, 'bold')
-canvas_height = 462
-canvas = tk.Canvas(gui, width=gui_width, height=canvas_height, bg=bg_color, borderwidth=0, highlightthickness=0)
-
-logos = []
 
 
-def show_standings():
-    cols = ('TEAM', 'Pts', 'PG', 'W', 'D', 'L', 'GF', 'GA', 'DIFF')
-    header_font = ('Inter', 12, 'bold')
-    row_font = ('Inter', 12)
-
-    row_height = 22
-
-    # drawing header
-    canvas.create_rectangle(0, 0, gui_width, row_height, fill=primary_color, outline='')
-    canvas.create_text(40, 11, text=cols[0], anchor='w', font=header_font)
-    dist = 0
-    for i in range(1, len(cols)):
-        canvas.create_text(512 + dist, 11, text=cols[i], font=header_font)
-        dist += 64
-
-    # drawing rows
-    y_top = row_height
-    standings = league.get_standings()
-    for i in range(20):
-        row_color = '#202020'
-        if i % 2 == 1:
-            row_color = '#383838'
-        canvas.create_rectangle(0, y_top, gui_width, y_top + row_height, fill=row_color, outline='')
-
-        # team data in row
-        participant = standings[i]
-        team = participant.team
-
-        # standing position
-        canvas.create_rectangle(6, y_top + 2, 26.5, y_top + 20, fill='white', outline='')
-        canvas.create_text(16, y_top + 11, text='{0}'.format(i + 1), fill='black', font=row_font)
-
-        # team image
-        img = Image.open('../logos/' + team.identifier + '.png')
-        img = img.resize((18, 18))
-        team_image = ImageTk.PhotoImage(img)
-        logos.append(team_image)
-        canvas.create_image(40, y_top + 11, image=team_image, anchor='w')
-
-        # team name
-        canvas.create_text(66, y_top + 11, text=team.name, anchor='w', fill='white', font=row_font)
-
-        # team points
-        dist = 0
-        canvas.create_text(512, y_top + 11, text=participant.points, fill='white', font=row_font)
-        dist += 64
-        canvas.create_text(512 + dist, y_top + 11, text=league.matchday, fill='white', font=row_font)
-        dist += 64
-        canvas.create_text(512 + dist, y_top + 11, text=participant.wins, fill='white', font=row_font)
-        dist += 64
-        canvas.create_text(512 + dist, y_top + 11, text=participant.draws, fill='white', font=row_font)
-        dist += 64
-        canvas.create_text(512 + dist, y_top + 11, text=participant.losses, fill='white', font=row_font)
-        dist += 64
-        canvas.create_text(512 + dist, y_top + 11, text=participant.goals_scored, fill='white', font=row_font)
-        dist += 64
-        canvas.create_text(512 + dist, y_top + 11, text=participant.goals_scored, fill='white', font=row_font)
-        dist += 64
-        goal_difference = participant.goals_scored - participant.goals_conceded
-        if goal_difference > 0:
-            goal_difference = '+' + str(goal_difference)
-        canvas.create_text(512 + dist, y_top + 11, text=goal_difference, fill='white', font=row_font)
-        y_top += row_height
-
-    canvas.pack()
+class Gui(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self.configure(background=bg_color)
+        t = StandingsTable(self)
+        t.pack(side="top", fill="x")
+        t.set_standings()
 
 
-gui.geometry('1024x512')
-gui.resizable(False, False)
-gui.configure(bg=bg_color)
+class StandingsTable(tk.Frame):
+    def __init__(self, parent):
+        tk.Frame.__init__(self, parent, background=bg_color)
 
-show_standings()
+        self.rows = league.n_participants
+        self.logos = None
+        self.columns = 12
+        header_titles = ('', '', 'TEAM', '', 'Pts', 'PG', 'W', 'D', 'L', 'GF', 'GA', 'DIFF')
+        self.header_font = ('Inter', 12, 'bold')
+        self.row_font = ('Inter', 12)
+        # use black background so it "peeks through" to
+        # form grid lines
+
+        self._widgets = []
+
+        column_widths = (3, 3, 30, 20, 5, 5, 5, 5, 5, 5, 5, 5)
+
+        for column in range(self.columns):
+            anchor = tk.CENTER
+            if column == 2:
+                anchor = tk.W
+            label = tk.Label(self, text=header_titles[column],
+                             borderwidth=0, width=column_widths[column],
+                             anchor=anchor, font=self.header_font, bg=primary_color)
+            label.grid(row=0, column=column, sticky='nsew')
+
+        for row in range(1, self.rows + 1):
+            row_color = '#202020'
+            if row % 2 == 1:
+                row_color = '#383838'
+
+            current_row = []
+            for column in range(self.columns):
+                anchor = tk.CENTER
+                if 2 <= column <= 3:
+                    anchor = tk.W
+                label = tk.Label(self, text="%s/%s" % (row, column),
+                                 borderwidth=0, width=column_widths[column],
+                                 bg=row_color, fg='white', font=self.row_font, anchor=anchor)
+                label.grid(row=row, column=column, sticky="nsew")
+                current_row.append(label)
+            self._widgets.append(current_row)
+
+        for column in range(self.columns):
+            self.grid_columnconfigure(column, weight=1)
+
+    def set_standings(self):
+        standings = league.get_standings()
+        self.logos = []
+        for i in range(len(standings)):
+            participant = standings[i]
+            team = participant.team
+
+            # print position
+            widget = self._widgets[i][0]
+            widget.configure(text=i + 1)
+
+            # print team-image
+            widget = self._widgets[i][1]
+            img = Image.open("../logos/" + team.identifier + ".png")
+            img = img.resize((20, 20), Image.ANTIALIAS)
+            img = ImageTk.PhotoImage(img)
+            self.logos.append(img)
+            widget.configure(image=img)
+
+            goal_difference = participant.goals_scored - participant.goals_conceded
+            if goal_difference > 0:
+                goal_difference = '+' + str(goal_difference)
+
+            team_data = ('', '', team.name, team.form_value, participant.points, league.matchday,
+                         participant.wins, participant.draws, participant.losses,
+                         participant.goals_scored, participant.goals_conceded, goal_difference)
+
+            for j in range(2, self.columns):
+                widget = self._widgets[i][j]
+                widget.configure(text=team_data[j])
 
 
-def start_next_game():
-    league.generate_matchday()
-    global canvas
-    canvas.destroy()
-    canvas = tk.Canvas(gui, width=gui_width, height=canvas_height, bg=bg_color, borderwidth=0, highlightthickness=0)
-    show_standings()
-
-
-next_game_btn = tk.Button(text='Next Game', bg=primary_color, font=app_font_bold, bd=0, command=start_next_game)
-next_game_btn.pack(padx=(0, 64), side=tk.RIGHT)
+gui = Gui()
 gui.mainloop()
