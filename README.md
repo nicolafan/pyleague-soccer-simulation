@@ -5,7 +5,7 @@ PyLeague is a software simulation of a soccer championship developed using Pytho
 
 ## Features
 * League setup with csv configuration.
-* Possibility of changing the parameters of each time (_strength value_, _attack power_, _defense power_).
+* Possibility of changing the parameters of each team (_strength value_, _attack power_, _defense power_).
 * Realistic outcome and score generation.
 * Scores and outcomes slightly influenced by the form of the team.
 * Updated standings screen.
