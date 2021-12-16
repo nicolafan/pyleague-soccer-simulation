@@ -70,6 +70,9 @@ class League:
         return [x for x in self.participants if x.team.identifier == identifier][0]
 
     def generate_matchday(self):
+        if self.matchday >= self.n_participants * 2 - 2:
+            print("The championship has ended!")
+            return
         for (x, y) in self.fixtures[self.matchday]:
             participant_a = self.get_participant_by_id(x)
             participant_b = self.get_participant_by_id(y)
