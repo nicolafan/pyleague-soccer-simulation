@@ -187,10 +187,8 @@ def generate_result(team_a: models.Team, team_b: models.Team, outcome: str) -> T
     return goals_home, goals_away
 
 def generate_time_for_goals(goals_h: int, goals_a: int) -> List[List[int], List[int]]:
-    goal_mins = fisher_shuffle(goals_a + goals_h)
+    goal_mins = return random.choices([i for i in range(91)], k = goals)
     mins_goal_a = goal_mins[:goals_a]
     mins_goal_h = goal_mins[goals_a:goals_a + goals_h]
     return mins_goal_a, mins_goal_h
-
-def fisher_shuffle(goals):
-    return random.choices([i for i in range(91)], k = goals)
+    
