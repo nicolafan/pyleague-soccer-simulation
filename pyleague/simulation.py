@@ -186,7 +186,7 @@ def generate_result(team_a: models.Team, team_b: models.Team, outcome: str) -> T
         goals_home, goals_away = get_drawing_score(team_a, team_b)
     return goals_home, goals_away
 
-def generate_time_for_goals(goals_h: int, goals_a: int) -> List[List[int], List[int]]:
+def generate_time_for_goals(goals_h: int, goals_a: int) -> Tuple[List[int], List[int]]:
     goal_mins = random.sample([i for i in range(91)], goals_h + goals_a)
     mins_goal_h = goal_mins[:goals_h]
     mins_goal_a = goal_mins[goals_h:goals_h + goals_a]
