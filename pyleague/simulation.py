@@ -190,7 +190,7 @@ def generate_time_for_goals(goals_h: int, goals_a: int) -> List[List[int], List[
     shuffle_space = [i for i in range(1, 91)]
     mins_goal_a = fisher_shuffle(goals_a, shuffle_space, i = 0)
     mins_goal_h = fisher_shuffle(goals_h, shuffle_space, i = goals_a)
-    return [mins_goal_a, mins_goal_h]
+    return mins_goal_h, mins_goal_a
 
 def fisher_shuffle(goals, shuffle_space, i = 0):
     st = i
