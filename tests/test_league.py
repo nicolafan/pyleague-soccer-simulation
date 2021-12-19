@@ -53,11 +53,7 @@ def test_generate_fixtures():
         teams.append(random_team)
         played[random_team.identifier] = {'home': 0, 'away': 0}
 
-    print(len(teams))
     tournament = league.League(name=league_name, teams=teams)
-    print(tournament.n_participants)
-    print(tournament.fixtures)
-    print(len(tournament.fixtures))
 
     assert len(tournament.fixtures) == tournament.n_participants * 2 - 2
 
