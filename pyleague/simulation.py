@@ -185,3 +185,17 @@ def generate_result(team_a: models.Team, team_b: models.Team, outcome: str) -> T
     else:
         goals_home, goals_away = get_drawing_score(team_a, team_b)
     return goals_home, goals_away
+
+def generate_time_for_goals(goals_h: int, goals_a: int) -> List[List[int], List[int]]:
+    shuffle_space = [i for i in range(1, 91)]
+    mins_goal_a = fisher_shuffle(goals_a, shuffle_space, i = 0)
+    mins_goal_h = fisher_shuffle(goals_h, shuffle_space, i = goals_a)
+    return [mins_goal_a, mins_goal_h]
+
+def fisher_shuffle(goals, shuffle_space, i = 0):
+    st = i
+    while i < goals:
+        r = random.randint(i, len(shuffle_space))
+        shuffle_space[i], shuffle_space[r] = shuffle_space[r], shuffle_space[i]
+        i += 1
+    return shuffle_space[st:goals + st]
