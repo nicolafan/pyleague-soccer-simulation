@@ -12,7 +12,7 @@ from . import models
 def get_weight(team: models.Team, is_home: bool) -> int:
     """Produces the weight of a team
 
-    The weight is the basic number which will determine its probability of winning the game when compared to
+    The weight is the basic number which will determine a team's probability of winning the game when compared to
     the weight of the opponent.
     It is given by the sum of the different parameters which characterize a single team.
     This makes it very easy to add new parameters that will determine the measurement of the probabilities.
@@ -61,7 +61,7 @@ def get_relative_distance(x: float, y: float) -> float:
     :param: y: second value
     :return: relative distance
     """
-    return (x - y) / max(x, y)
+    return (x - y) / max(abs(x), abs(y))
 
 
 def get_draw_weight(a_weight: int, b_weight: int) -> int:
@@ -69,11 +69,11 @@ def get_draw_weight(a_weight: int, b_weight: int) -> int:
 
     Once we have two team weights, we should allocate some weight to the possibility of a draw, since its probability
     is never 0.
-    The probability of the draw is a function of the relative distance between two points.
+    The probability of a draw is a function of the relative distance between two points.
     If the relative distance is small, there will be a higher probability of draw.
     If the relative distance is large, then a team is much better than the other.
-    This means that the draw probability is lower, it has always to be greater than the probability that the
-    weaker team could win.
+    When the draw probability is small (because there is a much better team), it has always
+    this probability must be greater than the probability that the weaker team could win.
 
     :param a_weight: weight of the first team
     :param b_weight: weight of the second team
@@ -82,7 +82,7 @@ def get_draw_weight(a_weight: int, b_weight: int) -> int:
     if b_weight > a_weight:
         a_weight, b_weight = b_weight, a_weight
 
-    # the first point of the line: if the teams have an equal weight, draw weight is 0.35
+    # the first point of the line: if the teams have an equal weight, draw probability is 0.35
     draw_line_pt1 = (0, 0.35)
 
     # second point of the line (measured after observations)
