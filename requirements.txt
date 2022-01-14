@@ -6,7 +6,7 @@ mypy==0.920
 mypy-extensions==0.4.3
 packaging==21.3
 pathspec==0.9.0
-Pillow==8.4.0
+Pillow==9.9.0
 pip==21.3.1
 platformdirs==2.4.0
 pluggy==1.0.0
