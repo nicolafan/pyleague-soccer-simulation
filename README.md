@@ -29,6 +29,10 @@ PyLeague will start after running <code>main.py</code>.
 ## Contributing
 If you want to help me adding new features and improving PyLeague, you're welcome!<br> Just fork the project, commit your changes and create a PR.
 <br>If you want you can create a new issue for the project and ask me anything related to it here on Github!
+<br>When starting working to an issue, create a branch called: 
+``` 
+issue/{number of the issue}-{title of the issue (lowercase), separe spaces with `-`}
+```
 <br>I'm open to new improvements and suggestions.
 
 ### Testing
