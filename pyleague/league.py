@@ -90,10 +90,16 @@ class League:
                 participant_a.add_draw()
                 participant_b.add_draw()
 
-            goals_home, goals_away = simulation.generate_result(participant_a.team,
-                                                                participant_b.team,
-                                                                outcome)
-            print(participant_a.team.name, goals_home, '-', goals_away, participant_b.team.name)
+            goals_home, goals_away = simulation.generate_result(
+                participant_a.team, participant_b.team, outcome
+            )
+            print(
+                participant_a.team.name,
+                goals_home,
+                "-",
+                goals_away,
+                participant_b.team.name,
+            )
             participant_a.goals_scored += goals_home
             participant_a.goals_conceded += goals_away
             participant_b.goals_scored += goals_away

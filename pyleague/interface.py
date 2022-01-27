@@ -1,6 +1,6 @@
 import tkinter as tk
 from pyleague.league import league
-from PIL import ImageTk, Image
+from PIL import ImageTk, Image  # type: ignore
 
 # globals
 bg_color = "#121212"

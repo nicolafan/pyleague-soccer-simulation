@@ -5,7 +5,7 @@ Simulation regards different aspects: the final outcome, the final results, minu
 """
 
 import random
-from typing import Tuple
+from typing import Tuple, List
 from . import models
 
 
@@ -109,7 +109,9 @@ def generate_outcome(team_a: models.Team, team_b: models.Team) -> str:
     return outcome
 
 
-def evaluate_goal_weights(scorer_team: models.Team, defender_team: models.Team, with_zero: bool):
+def evaluate_goal_weights(
+    scorer_team: models.Team, defender_team: models.Team, with_zero: bool
+):
     goal_0_line = ((0, 0.3), (0.96, 0.05))
 
     goal_1_line = ((0, 0.5), (0.96, 0.2))
@@ -145,7 +147,7 @@ def get_winning_score(team_winner: models.Team, team_loser: models.Team):
         possible_away.append(i)
 
     goal_weights = evaluate_goal_weights(team_winner, team_loser, True)
-    goal_weights = goal_weights[:len(possible_away)]
+    goal_weights = goal_weights[: len(possible_away)]
     goals_l = random.choices(population=possible_away, weights=goal_weights, k=1)[0]
 
     return goals_w, goals_l
@@ -177,7 +179,9 @@ def get_drawing_score(team_a: models.Team, team_b: models.Team):
     return goals, goals
 
 
-def generate_result(team_a: models.Team, team_b: models.Team, outcome: str) -> Tuple[int, int]:
+def generate_result(
+    team_a: models.Team, team_b: models.Team, outcome: str
+) -> Tuple[int, int]:
     if outcome == "1":
         goals_home, goals_away = get_winning_score(team_a, team_b)
     elif outcome == "2":
@@ -186,9 +190,9 @@ def generate_result(team_a: models.Team, team_b: models.Team, outcome: str) -> T
         goals_home, goals_away = get_drawing_score(team_a, team_b)
     return goals_home, goals_away
 
+
 def generate_time_for_goals(goals_h: int, goals_a: int) -> Tuple[List[int], List[int]]:
     goal_mins = random.sample([i for i in range(91)], goals_h + goals_a)
     mins_goal_h = goal_mins[:goals_h]
-    mins_goal_a = goal_mins[goals_h:goals_h + goals_a]
+    mins_goal_a = goal_mins[goals_h : goals_h + goals_a]
     return mins_goal_h, mins_goal_a
-    

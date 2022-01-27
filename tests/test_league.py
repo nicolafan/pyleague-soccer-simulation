@@ -21,10 +21,10 @@ def test_create_league():
 
     teams_fail_4: List[Team] = []
     x = util.get_random_team()
-    x.identifier = 'equ'
+    x.identifier = "equ"
     teams_fail_4.append(x)
     x = util.get_random_team()
-    x.identifier = 'equ'
+    x.identifier = "equ"
     teams_fail_4.append(x)
 
     teams_ok: List[Team] = []
@@ -51,7 +51,7 @@ def test_generate_fixtures():
     for i in range(20):
         random_team = util.get_random_team()
         teams.append(random_team)
-        played[random_team.identifier] = {'home': 0, 'away': 0}
+        played[random_team.identifier] = {"home": 0, "away": 0}
 
     tournament = league.League(name=league_name, teams=teams)
 
@@ -59,10 +59,12 @@ def test_generate_fixtures():
 
     for matchday in tournament.fixtures:
         for (x, y) in matchday:
-            played[x]['home'] += 1
-            played[y]['away'] += 1
+            played[x]["home"] += 1
+            played[y]["away"] += 1
         playing_teams = [team for game in matchday for team in game]
         assert len(playing_teams) == len(set(playing_teams))
 
     for team in played:
-        assert played[team]['home'] == 19 and played[team]['home'] == played[team]['away']
+        assert (
+            played[team]["home"] == 19 and played[team]["home"] == played[team]["away"]
+        )
