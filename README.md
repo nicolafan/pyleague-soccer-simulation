@@ -34,6 +34,7 @@ If you want to help me adding new features and improving PyLeague, you're welcom
 issue/{number of the issue}-{title of the issue (lowercase), separe spaces with `-`}
 ```
 <br>I'm open to new improvements and suggestions.
+<br>Class/function/method documentation is written like (this)[https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html].
 
 ### Testing
 To start the automated tests run:
