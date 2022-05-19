@@ -3,12 +3,23 @@ import random
 import typing
 from typing import Optional
 
-from pyleague import simulation
-from pyleague.models import *
+import simulation
+from models import *
 
 
-class League:
+class League:    
+    """This is a class that conceptually emulates a real-world football league. It contains the attributes and methods that would be necessary in a real-world league. 
+
+    :param name: name of the league 
+    :type name: str
+    :param teams: list of Team objects
+    :type teams: list
+    ...
+    :raises ValueError: if the team objects are not all unique in terms of their .identifier attribute, then a ValueError will be raised  
+    """
     def __init__(self, name: str, teams: List[Team]) -> None:
+        """ Constructor method
+        """
         self.fixtures: List[List[typing.Tuple[str, str]]] = []
         self.matchday = 0
 
@@ -28,6 +39,8 @@ class League:
         self._generate_fixtures()
 
     def _generate_fixtures(self):
+        """Generates match fixtures for all of the Participant objects in the League
+        """        
         group_size = int(self.n_participants / 2)
         group_a = random.sample(self.participants, group_size)
         group_a = [p.team.identifier for p in group_a]
@@ -64,12 +77,30 @@ class League:
             self.fixtures.append(second_round)
 
     def get_team_by_id(self, identifier: str) -> Team:
+        """Gets the Team object with specified identifier 
+        ...
+        :param identifier: Team object identifier
+        :type identifier: str
+        ...
+        :return: Team object whose identifier attribute is equal to the identifier provided as a parameter to this method (only one object as each Team is supposed to have distinct identifiers)
+        :rtype: Team
+        """
         return [x.team for x in self.participants if x.team.identifier == identifier][0]
 
     def get_participant_by_id(self, identifier: str) -> Participant:
+        """Gets the Participant object, i.e. a Team object in the self.participants attribute, with specified Team identifier 
+        ...
+        :param identifier: Team object identifier
+        :type identifier: str
+        ...
+        :return: Participant object's whose Team object (in the self.team attribute) identifier matches that of the identifier parameter
+        :rtype: Participant
+        """
         return [x for x in self.participants if x.team.identifier == identifier][0]
 
     def generate_matchday(self):
+        """
+        """
         if self.matchday >= self.n_participants * 2 - 2:
             print("The championship has ended!")
             return
@@ -109,6 +140,8 @@ class League:
         # self._print_standings()
 
     def _print_standings(self):
+        """Prints out the standings in the League so far for each Participant object
+        """
         standings = [x for x in self.participants]
         standings.sort(key=lambda x: x.points, reverse=True)
         print("MATCHDAY {0}\n".format(self.matchday))
@@ -117,6 +150,11 @@ class League:
         print("\n")
 
     def get_standings(self):
+        """Gets a list of the League's Participant objects in the descending order by the number of points they have
+        ... 
+        :return: a sorted list of Team objects by the number of points they have accrued 
+        :rtype: list of Participant
+        """
         standings = [x for x in self.participants]
         standings.sort(key=lambda x: x.points, reverse=True)
         return standings
@@ -126,6 +164,16 @@ league: Optional[League] = None
 
 
 def create_league(name: str, teams: List[Team]):
+    """Creates a League object and returns it
+    ...
+    :param name: name to be given to the League object
+    :type name: str
+    :param teams: list containing Team objects that will participate in the League 
+    :type teams: List[Team]
+    ...
+    :return: a League object with specified name and Team objects given as parameters to its constructor 
+    :rtype: League
+    """
     global league
     league = League(name, teams)
     return league
