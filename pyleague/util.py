@@ -6,10 +6,9 @@ import models
 
 def get_random_string(length: int) -> str:
     """Generates a random string containing letters of the alphabet and digits
-    ...
+    
     :param length: the length of the random string desired 
     :type length: int
-    ...
     :return: a random string containing letters and digits
     :rtype: str
     """
@@ -20,7 +19,7 @@ def get_random_string(length: int) -> str:
 
 def get_random_team():
     """Generates arguments randomly to be used to create a random Team object 
-    ...
+
     :return: a Team object with randomly generated parameters passed into its constructor
     :rtype: Team 
     """

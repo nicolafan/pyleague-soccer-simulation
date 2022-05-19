@@ -14,11 +14,11 @@ class League:
     :type name: str
     :param teams: list of Team objects
     :type teams: list
-    ...
+    
     :raises ValueError: if the team objects are not all unique in terms of their .identifier attribute, then a ValueError will be raised  
     """
     def __init__(self, name: str, teams: List[Team]) -> None:
-        """ Constructor method
+        """Constructor method
         """
         self.fixtures: List[List[typing.Tuple[str, str]]] = []
         self.matchday = 0
@@ -78,10 +78,9 @@ class League:
 
     def get_team_by_id(self, identifier: str) -> Team:
         """Gets the Team object with specified identifier 
-        ...
+        
         :param identifier: Team object identifier
         :type identifier: str
-        ...
         :return: Team object whose identifier attribute is equal to the identifier provided as a parameter to this method (only one object as each Team is supposed to have distinct identifiers)
         :rtype: Team
         """
@@ -89,17 +88,16 @@ class League:
 
     def get_participant_by_id(self, identifier: str) -> Participant:
         """Gets the Participant object, i.e. a Team object in the self.participants attribute, with specified Team identifier 
-        ...
+        
         :param identifier: Team object identifier
         :type identifier: str
-        ...
         :return: Participant object's whose Team object (in the self.team attribute) identifier matches that of the identifier parameter
         :rtype: Participant
         """
         return [x for x in self.participants if x.team.identifier == identifier][0]
 
     def generate_matchday(self):
-        """
+        """Simulates matches between pairings of teams
         """
         if self.matchday >= self.n_participants * 2 - 2:
             print("The championship has ended!")
@@ -151,7 +149,7 @@ class League:
 
     def get_standings(self):
         """Gets a list of the League's Participant objects in the descending order by the number of points they have
-        ... 
+         
         :return: a sorted list of Team objects by the number of points they have accrued 
         :rtype: list of Participant
         """
@@ -165,12 +163,11 @@ league: Optional[League] = None
 
 def create_league(name: str, teams: List[Team]):
     """Creates a League object and returns it
-    ...
+    
     :param name: name to be given to the League object
     :type name: str
     :param teams: list containing Team objects that will participate in the League 
     :type teams: List[Team]
-    ...
     :return: a League object with specified name and Team objects given as parameters to its constructor 
     :rtype: League
     """

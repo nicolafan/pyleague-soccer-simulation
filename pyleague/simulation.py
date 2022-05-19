@@ -107,7 +107,7 @@ def generate_outcome(team_a: models.Team, team_b: models.Team) -> str:
     :type team_a: Team
     :param team_b: the second team that is taking part in the match
     :type team_b: Team
-    :return: a string containing the name of the winning team in the match
+    :return: either 1, X, or 2 indicating which team won the match (X is for ties)
     :rtype: str
     """
     a_weight = get_weight(team_a, is_home=True)
@@ -121,8 +121,7 @@ def generate_outcome(team_a: models.Team, team_b: models.Team) -> str:
 def evaluate_goal_weights(
     scorer_team: models.Team, defender_team: models.Team, with_zero: bool
 ):
-    """
-    Evaluates the weight-age for a goal 
+    """Evaluates the weight-age for a goal 
 
     :param scorer_team: the Team that is visiting (is away) the second team in a match
     :type scorer_team: models.Team
@@ -160,8 +159,7 @@ def evaluate_goal_weights(
 
 
 def get_winning_score(team_winner: models.Team, team_loser: models.Team):
-    """
-    Evaluates the number of goals both teams score in a match 
+    """Evaluates the number of goals both teams score in a match 
 
     :param team_winner: the Team object that wins in a match
     :type team_winner: models.Team
@@ -185,8 +183,7 @@ def get_winning_score(team_winner: models.Team, team_loser: models.Team):
 
 
 def get_drawing_score(team_a: models.Team, team_b: models.Team):
-    """
-    Evaluates the drawing score
+    """Evaluates the drawing score
 
     :param team_a: the first team that takes part in a match
     :type team_a: models.Team
@@ -223,14 +220,13 @@ def get_drawing_score(team_a: models.Team, team_b: models.Team):
 def generate_result(
     team_a: models.Team, team_b: models.Team, outcome: str
 ) -> Tuple[int, int]:
-    """
-    Generates the result of a pairing between two teams (depending on what condition the game is held under, i.e. at home or away)
+    """Generates the result of a pairing between two teams (depending on what condition the game is held under, i.e. at home or away)
 
-    :param team_a: 
+    :param team_a: the first team that is taking part in the match
     :type team_a: models.Team
-    :param team_b: 
+    :param team_b: the second team that is taking part in the match
     :type team_b: models.Team
-    :param outcome: 
+    :param outcome: number representing the winner of the match: 1, 2, X (X is for ties)
     :type outcome: str
     :return: the number of goals both teams, one at home and the one away, score in a match 
     :rtype: Tuple[int, int]
@@ -245,8 +241,7 @@ def generate_result(
 
 
 def generate_time_for_goals(goals_h: int, goals_a: int) -> Tuple[List[int], List[int]]:
-    """
-    Generates the times during the game when both the home team and the away team score a goal
+    """Generates the times during the game when both the home team and the away team score a goal
 
     :param goals_h: the number of goals the home team scores
     :type goals_h: int

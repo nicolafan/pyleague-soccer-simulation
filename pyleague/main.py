@@ -12,7 +12,6 @@ def setup_teams(filename):
 
     :param filename: the file path to the file containing information about the teams
     :type filename: string
-    ...
     :raises FileNotFoundError: will raise a FileNotFoundError if the file is not found in the path specified
     """
     # Read CSV file
