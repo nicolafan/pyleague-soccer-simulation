@@ -1,8 +1,7 @@
 import random
 import string
 
-import models
-
+import pyleague.models
 
 def get_random_string(length: int) -> str:
     """Generates a random string containing letters of the alphabet and digits
@@ -29,5 +28,5 @@ def get_random_team():
     ap = random.randint(1, 40)
     dp = random.randint(1, 40)
 
-    team = models.Team(identifier, name, sv, ap, dp)
+    team = pyleague.models.Team(identifier, name, sv, ap, dp)
     return team

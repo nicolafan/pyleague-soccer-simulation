@@ -3,9 +3,8 @@ import random
 import typing
 from typing import Optional
 
-import simulation
-from models import *
-
+from pyleague import simulation
+from pyleague.models import *
 
 class League:    
     """This is a class that conceptually emulates a real-world football league. It contains the attributes and methods that would be necessary in a real-world league. 

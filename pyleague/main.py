@@ -3,7 +3,7 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import csv
-from league import *
+from pyleague.league import *
 
 teams: List[Team] = []
 
@@ -12,6 +12,7 @@ def setup_teams(filename):
 
     :param filename: the file path to the file containing information about the teams
     :type filename: string
+
     :raises FileNotFoundError: will raise a FileNotFoundError if the file is not found in the path specified
     """
     # Read CSV file
@@ -29,4 +30,4 @@ if __name__ == "__main__":
     setup_teams("../lega_a.csv")
     league = create_league(name="Lega A", teams=teams)
     print(league)
-    import interface
+    import pyleague.interface

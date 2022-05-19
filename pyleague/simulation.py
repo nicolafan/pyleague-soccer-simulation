@@ -6,8 +6,7 @@ Simulation regards different aspects: the final outcome, the final results, minu
 
 import random
 from typing import Tuple, List
-import models
-
+from . import models
 
 def get_weight(team: models.Team, is_home: bool) -> int:
     """Produces the weight of a team

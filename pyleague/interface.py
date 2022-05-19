@@ -1,5 +1,5 @@
 import tkinter as tk
-from league import league
+from pyleague.league import league
 from PIL import ImageTk, Image  # type: ignore
 
 # globals
