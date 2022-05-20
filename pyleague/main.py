@@ -3,7 +3,7 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import csv
-from pyleague.league import *
+from league import *
 
 teams: List[Team] = []
 
@@ -27,7 +27,7 @@ def setup_teams(filename):
 
 # Press the green button in the gutter to run the script.
 if __name__ == "__main__":
-    setup_teams("../lega_a.csv")
+    setup_teams("lega_a.csv")
     league = create_league(name="Lega A", teams=teams)
     print(league)
-    import pyleague.interface
+    import interface
