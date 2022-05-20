@@ -6,8 +6,7 @@ Simulation regards different aspects: the final outcome, the final results, minu
 
 import random
 from typing import Tuple, List
-from . import models
-
+import models
 
 def get_weight(team: models.Team, is_home: bool) -> int:
     """Produces the weight of a team
@@ -101,6 +100,15 @@ def get_draw_weight(a_weight: int, b_weight: int) -> int:
 
 
 def generate_outcome(team_a: models.Team, team_b: models.Team) -> str:
+    """Generates the match outcome for a game between two teams 
+    
+    :param team_a: the first team that is taking part in the match
+    :type team_a: Team
+    :param team_b: the second team that is taking part in the match
+    :type team_b: Team
+    :return: either 1, X, or 2 indicating which team won the match (X is for ties)
+    :rtype: str
+    """
     a_weight = get_weight(team_a, is_home=True)
     b_weight = get_weight(team_b, is_home=False)
     d_weight = get_draw_weight(a_weight, b_weight)
@@ -112,6 +120,17 @@ def generate_outcome(team_a: models.Team, team_b: models.Team) -> str:
 def evaluate_goal_weights(
     scorer_team: models.Team, defender_team: models.Team, with_zero: bool
 ):
+    """Evaluates the weight-age for a goal 
+
+    :param scorer_team: the Team that is visiting (is away) the second team in a match
+    :type scorer_team: models.Team
+    :param defender_team: the Team that is at home against the first team in a match
+    :type defender_team: models.Team
+    :param with_zero: (not sure)
+    :type with_zero: bool
+    :return: (not sure)
+    :rtype: List[int]
+    """
     goal_0_line = ((0, 0.3), (0.96, 0.05))
 
     goal_1_line = ((0, 0.5), (0.96, 0.2))
@@ -139,6 +158,15 @@ def evaluate_goal_weights(
 
 
 def get_winning_score(team_winner: models.Team, team_loser: models.Team):
+    """Evaluates the number of goals both teams score in a match 
+
+    :param team_winner: the Team object that wins in a match
+    :type team_winner: models.Team
+    :param team_loser: the Team object that loses in a match
+    :type team_loser: models.Team
+    :return: the number of goals both teams score in a match
+    :rtype: Tuple[int, int]
+    """
     goal_weights = evaluate_goal_weights(team_winner, team_loser, False)
     goals_w = random.choices(population=[1, 2, 3, 4], weights=goal_weights, k=1)[0]
 
@@ -154,6 +182,15 @@ def get_winning_score(team_winner: models.Team, team_loser: models.Team):
 
 
 def get_drawing_score(team_a: models.Team, team_b: models.Team):
+    """Evaluates the drawing score
+
+    :param team_a: the first team that takes part in a match
+    :type team_a: models.Team
+    :param team_b: the second team that takes part in a match
+    :type team_b: models.Team
+    :return: (not sure)
+    :rtype: Tuple[float, float], Tuple[int, int]
+    """
 
     # TODO: use a cycle
     goal_0_line = ((-0.1, 0.4), (0.1, 0.3))
@@ -182,6 +219,17 @@ def get_drawing_score(team_a: models.Team, team_b: models.Team):
 def generate_result(
     team_a: models.Team, team_b: models.Team, outcome: str
 ) -> Tuple[int, int]:
+    """Generates the result of a pairing between two teams (depending on what condition the game is held under, i.e. at home or away)
+
+    :param team_a: the first team that is taking part in the match
+    :type team_a: models.Team
+    :param team_b: the second team that is taking part in the match
+    :type team_b: models.Team
+    :param outcome: number representing the winner of the match: 1, 2, X (X is for ties)
+    :type outcome: str
+    :return: the number of goals both teams, one at home and the one away, score in a match 
+    :rtype: Tuple[int, int]
+    """
     if outcome == "1":
         goals_home, goals_away = get_winning_score(team_a, team_b)
     elif outcome == "2":
@@ -192,6 +240,15 @@ def generate_result(
 
 
 def generate_time_for_goals(goals_h: int, goals_a: int) -> Tuple[List[int], List[int]]:
+    """Generates the times during the game when both the home team and the away team score a goal
+
+    :param goals_h: the number of goals the home team scores
+    :type goals_h: int
+    :param goals_a: the number of goals the away team scores
+    :type goals_a: int
+    :return: two lists containing the time in minutes during the match for when the home team and the away team score, respectively
+    :rtype: Tuple[List[int], List[int]]
+    """
     goal_mins = random.sample([i for i in range(91)], goals_h + goals_a)
     mins_goal_h = goal_mins[:goals_h]
     mins_goal_a = goal_mins[goals_h : goals_h + goals_a]

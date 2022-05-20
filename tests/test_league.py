@@ -5,7 +5,6 @@ import pytest
 from pyleague import league, util
 from pyleague.models import Team
 
-
 def test_create_league():
     league_name = util.get_random_string(10)
 

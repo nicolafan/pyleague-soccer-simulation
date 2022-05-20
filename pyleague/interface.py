@@ -1,5 +1,5 @@
 import tkinter as tk
-from pyleague.league import league
+from league import league
 from PIL import ImageTk, Image  # type: ignore
 
 # globals
@@ -147,7 +147,7 @@ class StandingsTable(tk.Frame):
 
             # print team-image
             widget = self._widgets[i][1]
-            img = Image.open("../logos/" + team.identifier + ".png")
+            img = Image.open("logos/" + team.identifier + ".png")
             img = img.resize((20, 20), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
             self.logos.append(img)
