@@ -14,7 +14,7 @@ class League:
     :param teams: list of Team objects
     :type teams: list
     
-    :raises ValueError: if the team objects are not all unique in terms of their .identifier attribute, then a ValueError will be raised  
+    :raises ValueError: if the team objects are not all unique in terms of their .identifier attribute
     """
     def __init__(self, name: str, teams: List[Team]) -> None:
         """Constructor method
